@@ -1,13 +1,13 @@
 import base64
 import io
+import os
 
 import scrapy
 from PIL import Image
 from pytesseract import pytesseract
 from scrapy_splash import SplashRequest
 
-from ..items import HrItem
-import os
+from ..items import JobItem, JobItemLoader
 
 dir_path = os.path.dirname(os.path.abspath(__file__))
 script_path = os.path.join(dir_path, "../scripts/main.lua")
@@ -40,18 +40,16 @@ class JobsSpider(scrapy.Spider):
             yield response.follow(href, self.parse)
 
     def parse_job(self, response):
-        yield HrItem(
-            date=response.css('.date-lieu-annonce :first-child::text').get(),
-            text=self.get_ad_text(response),
-            ref=response.css('.reference-annonce::text').get(),
-            url=response.meta['ad_url'],
-            # email=self.get_ad_email(response.data.get('screenshot'))
-        )
-
-    @staticmethod
-    def get_ad_text(response):
-        text = response.css('.contenu-texte-annonce::text').get()
-        return ''.join(response.css('.contenu-texte-annonce b ::text').getall()) if text == "\t" else text
+        loader = JobItemLoader(item=JobItem(), response=response)
+        loader.add_css("date", ".date-lieu-annonce :first-child::text")
+        loader.add_css("date", ".date-lieu-annonce div:first-child::text")
+        loader.add_css("text", ".contenu-texte-annonce::text")
+        loader.add_css("text", ".contenu-texte-annonce b ::text")
+        loader.add_css("text", ".contenu-texte-annonce-pave ::text")
+        loader.add_css("ref", ".reference-annonce::text")
+        loader.add_value("url", response.meta['ad_url'])
+        loader.add_value("email", self.get_ad_email(response.data.get('screenshot')))
+        return loader.load_item()
 
     @staticmethod
     def get_ad_email(base64_image):
@@ -59,4 +57,4 @@ class JobsSpider(scrapy.Spider):
             return None
         data = base64.b64decode(base64_image)
         image = Image.open(io.BytesIO(data))
-        return pytesseract.image_to_string(image).strip()
+        return pytesseract.image_to_string(image).replace(" ", "")
