@@ -13,7 +13,7 @@ from scrapy.loader.processors import Join, TakeFirst
 DATE_FORMAT = "%Y/%m/%d"
 
 
-def date_processor(self, values):
+def date_processor(_self, values):
     for v in values:
         yield datetime.strptime(v, "%d/%m/%Y").strftime(DATE_FORMAT)
 

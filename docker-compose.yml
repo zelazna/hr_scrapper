@@ -1,9 +1,15 @@
 version: "3"
 services:
-  scrapper:
+  scrapy:
     build: ./hr
+    env_file:
+      - .env
+    depends_on:
+      - splash
   splash:
     image: scrapinghub/splash:latest
     ports:
-      - "8050:8050"
+      - 8050:8050
+    expose:
+      - 8050
 

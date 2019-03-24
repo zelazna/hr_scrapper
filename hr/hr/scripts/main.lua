@@ -37,8 +37,7 @@ function main(splash)
         ["Connection"] = "keep-alive",
         ["Cookie"] = "ASPSESSIONIDAQBQBQRC=OHGLLLECGAOJCDJDHDPKGLKL; WEBTRENDS_ID=19030404034407341402; atidvisitor=%7B%22name%22%3A%22atidvisitor%22%2C%22val%22%3A%7B%22vrn%22%3A%22-131883-%22%7D%2C%22options%22%3A%7B%22path%22%3A%22%2F%22%2C%22session%22%3A15724800%2C%22end%22%3A15724800%7D%7D; _ga=GA1.2.102164943.1551974808; alerte%5Fcookie%5Flhr=1; ASPSESSIONIDCQBRARQC=LCKPCFIDJBFAEIKPNMPLGANP; _gid=GA1.2.30797432.1552991614; ASPSESSIONIDSADABQBS=AGOLAJPAKCBBMBBJNDPOPAHC; ASPSESSIONIDSADCAQBS=DDIFDEBBALKHGMGMGAKLAAMJ; LastSearchHO=3%7C8; _gat_gtag_UA_118576901_1=1",
         ["Host"] = "www.lhotellerie-restauration.fr",
-        ["Upgrade-Insecure-Requests"] = "1",
-        ["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.3"
+        ["Upgrade-Insecure-Requests"] = "1"
     }
 
     splash:set_custom_headers(headers)

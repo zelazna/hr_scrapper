@@ -4,15 +4,15 @@ import psycopg2
 class Database(object):
     class __Singleton:
         # https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Singleton.html
-        def __init__(self, **kwargs):
-            self.conn = psycopg2.connect(**kwargs)
+        def __init__(self, db_url):
+            self.conn = psycopg2.connect(db_url)
             self.cursor = self.conn.cursor()
 
     instance = None
 
-    def __init__(self, **kwargs):
+    def __init__(self, arg):
         if not Database.instance:
-            Database.instance = Database.__Singleton(**kwargs)
+            Database.instance = Database.__Singleton(arg)
 
     def save(self, job):
         query = """
